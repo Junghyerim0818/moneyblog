@@ -198,3 +198,15 @@ img{max-width:100%;height:auto;display:block}
 
 .widget.Label:not(:has(a)),.widget.PopularPosts:not(:has(a)){display:none}
 .widget.Attribution .copyright{display:block;margin-top:4px}
+
+/* 빈 목록 */
+.empty-state{background:var(--card);border-radius:var(--r);padding:40px 24px;text-align:center;display:flex;flex-direction:column;gap:6px;color:var(--sub);font-size:15px}
+.empty-state b{color:var(--text);font-size:17px}
+/* 하단 위젯 묶음: 어느 섹션이든 2열 카드 + 맨 아래 한 줄 */
+.section:has(> .widget.BlogSearch),.section:has(> .widget.Profile),.extra{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:56px 0 0}
+.section:has(> .widget.BlogSearch) > .widget,.section:has(> .widget.Profile) > .widget{margin:0}
+.widget.Attribution,.widget.ReportAbuse{order:9;grid-column:1/-1;margin:0 !important;padding:0 !important;background:none !important}
+.widget.Attribution{margin-top:8px !important}
+.widget.Profile .widget-content > *{margin:0 0 6px}
+@media (max-width:600px){.section:has(> .widget.BlogSearch),.section:has(> .widget.Profile),.extra{grid-template-columns:1fr}}
+.widget.ReportAbuse,.widget.ReportAbuse *{font-size:12px !important;font-weight:400 !important;color:var(--muted) !important;text-align:center;margin:0 !important}

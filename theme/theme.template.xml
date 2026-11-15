@@ -146,6 +146,9 @@
 
 <script>//<![CDATA[
 (function(){
+  document.querySelectorAll('.grid:not(#related-grid)').forEach(function(g){
+    if(!g.querySelector('.card')){var d=document.createElement('div');d.className='empty-state';d.innerHTML='<b>첫 글을 준비하고 있어요</b><span>곧 그래프로 정리한 돈 이야기가 올라옵니다.</span>';g.replaceWith(d);}
+  });
   var bar=document.getElementById('progress'), body=document.getElementById('post-body');
   if(bar && body){
     window.addEventListener('scroll',function(){
