@@ -9,7 +9,7 @@ lev = None
 make(
     "basics-stock-first-buy",
     {"title": "주식 처음 시작하는 법｜계좌 개설부터 첫 매수·세금까지 7단계 (2026 최신 거래시간)",
-     "labels": ["증권", "금융기초", "주식입문"], "mode": "draft"},
+     "labels": ["증권", "금융기초", "주식입문"], "mode": "publish"},
     {"source": SRC_STOCK, "graphics": [
         {"type": "thumbnail", "file": "주식-처음-시작-7단계-썸네일",
          "eyebrow": "금융 기초 01", "title": "주식 처음이라면\n이 7단계만 따라 하세요",
@@ -131,7 +131,7 @@ make(
 make(
     "basics-per-pbr-roe",
     {"title": "PER·PBR·ROE 한 번에 이해하기｜숫자 3개로 주식이 싼지 비싼지 보는 법",
-     "labels": ["증권", "금융기초", "투자지표"], "mode": "draft"},
+     "labels": ["증권", "금융기초", "투자지표"], "mode": "publish"},
     {"source": "예시 수치는 이해를 돕기 위한 가상 기업", "graphics": [
         {"type": "thumbnail", "file": "PER-PBR-ROE-썸네일",
          "eyebrow": "금융 기초 02", "title": "PER·PBR·ROE\n숫자 3개로 끝내기",
@@ -252,7 +252,7 @@ print("레버리지 예시 마지막 값:", s1[-1], s2[-1], s3[-1])
 make(
     "basics-etf",
     {"title": "ETF 처음이라면｜펀드와 차이·고르는 법·세금까지 5분 정리 (2026)",
-     "labels": ["증권", "금융기초", "ETF"], "mode": "draft"},
+     "labels": ["증권", "금융기초", "ETF"], "mode": "publish"},
     {"source": "한국거래소·국세청·운용사 안내 (2026년 11월 기준)", "graphics": [
         {"type": "thumbnail", "file": "ETF-기초-썸네일",
          "eyebrow": "금융 기초 03", "title": "ETF 처음이라면\n이것만 알고 사세요",

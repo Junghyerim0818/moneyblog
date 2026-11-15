@@ -8,7 +8,7 @@ BOK = ("한국은행 경제용어사전", "https://www.bok.or.kr/portal/ecEdu/ec
 make(
     "basics-interest-rate",
     {"title": "기준금리가 오르면 내 돈은?｜대출·예금·주식·환율로 보는 금리 기초",
-     "labels": ["경제", "경제용어", "금리"], "mode": "draft"},
+     "labels": ["경제", "경제용어", "금리"], "mode": "publish"},
     {"source": "한국은행 (대출 이자는 단순 계산 예시)", "graphics": [
         {"type": "thumbnail", "file": "기준금리-기초-썸네일",
          "eyebrow": "경제 기초 01", "title": "기준금리가 오르면\n내 돈은 어떻게 될까",
@@ -118,7 +118,7 @@ make(
 make(
     "basics-exchange-rate",
     {"title": "환율 쉽게 이해하기｜원·달러 환율이 오르면 누가 웃고 누가 울까",
-     "labels": ["경제", "경제용어", "환율"], "mode": "draft"},
+     "labels": ["경제", "경제용어", "환율"], "mode": "publish"},
     {"source": "한국은행 (금액은 이해를 돕기 위한 예시)", "graphics": [
         {"type": "thumbnail", "file": "환율-기초-썸네일",
          "eyebrow": "경제 기초 02", "title": "환율이 오르면\n누가 웃고 누가 울까",
@@ -219,7 +219,7 @@ make(
 make(
     "basics-news-words",
     {"title": "경제 뉴스 단어 사전 20｜인플레이션부터 서킷브레이커까지 한 줄 정리",
-     "labels": ["경제", "경제용어", "뉴스속단어"], "mode": "draft"},
+     "labels": ["경제", "경제용어", "뉴스속단어"], "mode": "publish"},
     {"source": "한국은행 경제용어사전·한국거래소", "graphics": [
         {"type": "thumbnail", "file": "경제뉴스-단어사전-썸네일",
          "eyebrow": "경제 기초 03", "title": "경제 뉴스 단어 20개\n한 줄로 정리",

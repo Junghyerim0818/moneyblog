@@ -117,13 +117,43 @@ def main():
     if a.only:
         folders = [f for f in folders if f.name == a.only]
     todo = [f for f in folders if not (f / "posted.json").exists()]
-    if not todo:
+    # 임시저장으로 올렸던 글의 meta.json mode 를 publish/schedule 로 바꾸면 그 글을 공개 처리
+    promote = []
+    for f in folders:
+        pj = f / "posted.json"
+        if pj.exists():
+            rec = json.loads(pj.read_text(encoding="utf-8"))
+            mode = json.loads((f / "meta.json").read_text(encoding="utf-8")).get("mode", "draft")
+            if rec.get("mode") == "draft" and mode in ("publish", "schedule"):
+                promote.append((f, rec, mode))
+    if not todo and not promote:
         print("새 글 없음")
         return
     token = None if a.dry_run else access_token()
     blog_id = os.environ.get("BLOGGER_BLOG_ID", "DRY-RUN").strip()
     if not a.dry_run and blog_id == "DRY-RUN":
         sys.exit("GitHub Secrets 에 없음: BLOGGER_BLOG_ID")
+
+    for n, (f, rec, mode) in enumerate(promote):
+        meta = json.loads((f / "meta.json").read_text(encoding="utf-8"))
+        print(f"- {f.name}: 임시저장 → {mode}")
+        if a.dry_run:
+            continue
+        if n:
+            time.sleep(10)
+        q = ""
+        if mode == "schedule":
+            when = datetime.strptime(meta["at"], "%Y-%m-%d %H:%M").replace(tzinfo=KST).isoformat()
+            q = "?publishDate=" + urllib.parse.quote(when)
+        try:
+            res = call("POST", f"{API}/blogs/{blog_id}/posts/{rec['id']}/publish{q}", {}, token)
+        except RateLimited:
+            print("요청 한도가 풀리지 않아 멈춤. 나머지는 다음 실행 때 이어서 합니다.")
+            return
+        print(f"  → 완료 {res.get('url', '')}")
+        rec.update({"mode": mode, "url": res.get("url", rec.get("url")),
+                    "at": datetime.now(KST).isoformat(timespec="minutes")})
+        (f / "posted.json").write_text(json.dumps(rec, ensure_ascii=False, indent=1), encoding="utf-8")
 
     for n, f in enumerate(todo):
         if n and not a.dry_run:

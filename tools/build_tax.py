@@ -9,7 +9,7 @@ HT = ("국세청 홈택스", "https://www.hometax.go.kr", "")
 make(
     "basics-pension-vs-irp",
     {"title": "연금저축 vs IRP 차이｜세액공제·투자 상품·중도인출 한 표로 비교 (2026)",
-     "labels": ["절세", "연금저축", "IRP"], "mode": "draft"},
+     "labels": ["절세", "연금저축", "IRP"], "mode": "publish"},
     {"source": "국세청·소득세법 (2026년 기준)", "graphics": [
         {"type": "thumbnail", "file": "연금저축-IRP-차이-썸네일",
          "eyebrow": "절세 기초 01", "title": "연금저축 vs IRP\n뭐부터 채울까?",
@@ -120,7 +120,7 @@ make(
 make(
     "basics-stock-tax",
     {"title": "주식 세금 총정리 2026｜국내주식·해외주식·ETF·배당, 내가 낼 세금은 얼마?",
-     "labels": ["절세", "주식세금", "해외주식"], "mode": "draft"},
+     "labels": ["절세", "주식세금", "해외주식"], "mode": "publish"},
     {"source": "국세청·조세특례제한법 (2026년 기준)", "graphics": [
         {"type": "thumbnail", "file": "주식-세금-총정리-썸네일",
          "eyebrow": "절세 기초 02", "title": "주식 세금 총정리\n내가 낼 세금은?",
