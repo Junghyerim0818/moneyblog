@@ -14,6 +14,7 @@
 """
 import argparse
 import json
+import time
 import os
 import re
 import sys
@@ -45,7 +46,26 @@ def http(method, url, data=None, token=None, form=False):
             return json.loads(r.read() or b"{}")
     except urllib.error.HTTPError as e:
         msg = e.read().decode(errors="replace")[:500]
+        if e.code in (429, 500, 503):
+            raise RateLimited(f"{e.code}: {msg[:200]}")
         sys.exit(f"블로거 API 오류 {e.code}: {msg}")
+
+
+class RateLimited(Exception):
+    pass
+
+
+def call(*args, tries=4):
+    """요청 한도(429)에 걸리면 30초·60초·120초 쉬었다가 다시 시도."""
+    for k in range(tries):
+        try:
+            return http(*args)
+        except RateLimited as e:
+            if k == tries - 1:
+                raise
+            wait = 30 * 2 ** k
+            print(f"  … 요청 한도, {wait}초 쉬고 다시 시도 ({e})")
+            time.sleep(wait)
 
 
 def access_token():
@@ -105,7 +125,9 @@ def main():
     if not a.dry_run and blog_id == "DRY-RUN":
         sys.exit("GitHub Secrets 에 없음: BLOGGER_BLOG_ID")
 
-    for f in todo:
+    for n, f in enumerate(todo):
+        if n and not a.dry_run:
+            time.sleep(15)  # 블로거 API 요청 한도 여유
         meta = json.loads((f / "meta.json").read_text(encoding="utf-8"))
         mode = meta.get("mode", "draft")
         post = {"kind": "blogger#post", "title": meta["title"], "content": build_body(f),
@@ -114,12 +136,17 @@ def main():
         if a.dry_run:
             print(f"  본문 {len(post['content']):,}자, 이미지 {post['content'].count('<img')}개, 라벨 {post['labels']}")
             continue
-        res = http("POST", f"{API}/blogs/{blog_id}/posts?isDraft=true", post, token)
+        try:
+            res = call("POST", f"{API}/blogs/{blog_id}/posts?isDraft=true", post, token)
+        except RateLimited:
+            left = len(todo) - n
+            print(f"요청 한도가 풀리지 않아 멈춤. 남은 {left}개는 다음 실행 때 이어서 올립니다.")
+            return
         if mode == "schedule":
             when = datetime.strptime(meta["at"], "%Y-%m-%d %H:%M").replace(tzinfo=KST).isoformat()
-            res = http("POST", f"{API}/blogs/{blog_id}/posts/{res['id']}/publish?publishDate={urllib.parse.quote(when)}", {}, token)
+            res = call("POST", f"{API}/blogs/{blog_id}/posts/{res['id']}/publish?publishDate={urllib.parse.quote(when)}", {}, token)
         elif mode == "publish":
-            res = http("POST", f"{API}/blogs/{blog_id}/posts/{res['id']}/publish", {}, token)
+            res = call("POST", f"{API}/blogs/{blog_id}/posts/{res['id']}/publish", {}, token)
         state = {"draft": "임시저장", "schedule": f"예약 {meta.get('at')}", "publish": "발행"}[mode]
         print(f"  → {state} 완료 (id {res['id']}) {res.get('url', '')}")
         (f / "posted.json").write_text(json.dumps({"id": res["id"], "url": res.get("url"), "mode": mode,
