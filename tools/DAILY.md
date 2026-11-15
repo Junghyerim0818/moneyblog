@@ -34,3 +34,8 @@
 - 그래픽을 만든 뒤 이미지를 직접 열어 글자가 잘리거나 겹치지 않는지 확인해요. 표 칸의 글자는 짧게 써요.
 - 다 쓰면 `ledger.json`을 갱신하고, `python blogger/publish.py --dry-run`으로 확인한 뒤 커밋·push 해요. 그러면 GitHub Actions가 블로거에 공개해요.
 - push 뒤 `gh run list`로 워크플로가 성공했는지 확인해요. 실패하면 로그를 읽고 원인을 보고해요.
+
+## 쿠팡 파트너스 (tools/coupang.json, 지금은 enabled: false)
+- 켜져 있으면 게시할 때 자동으로 글 끝(FAQ 위)에 책 1~2개 카드가 들어가고, 썸네일 아래에 대가성 문구가 붙어요.
+- 글 주제에 딱 맞는 키워드가 있으면 meta.json에 `"coupang": {"keyword": "환율 투자 책"}`처럼 지정해요. 시황 글은 `"coupang": false`로 둬요.
+- 금융상품·투자 서비스·코인 관련 상품은 넣지 않아요.
