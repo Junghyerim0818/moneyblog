@@ -50,13 +50,13 @@ def http(method, url, data=None, token=None, form=False):
 
 def access_token():
     need = ["BLOGGER_CLIENT_ID", "BLOGGER_CLIENT_SECRET", "BLOGGER_REFRESH_TOKEN"]
-    miss = [k for k in need if not os.environ.get(k)]
+    miss = [k for k in need if not os.environ.get(k, "").strip()]
     if miss:
         sys.exit(f"GitHub Secrets 에 없음: {', '.join(miss)}")
     r = http("POST", "https://oauth2.googleapis.com/token", {
-        "client_id": os.environ["BLOGGER_CLIENT_ID"],
-        "client_secret": os.environ["BLOGGER_CLIENT_SECRET"],
-        "refresh_token": os.environ["BLOGGER_REFRESH_TOKEN"],
+        "client_id": os.environ["BLOGGER_CLIENT_ID"].strip().strip("\"'"),
+        "client_secret": os.environ["BLOGGER_CLIENT_SECRET"].strip().strip("\"'"),
+        "refresh_token": os.environ["BLOGGER_REFRESH_TOKEN"].strip().strip("\"'"),
         "grant_type": "refresh_token"}, form=True)
     return r["access_token"]
 
@@ -99,7 +99,7 @@ def main():
         print("새 글 없음")
         return
     token = None if a.dry_run else access_token()
-    blog_id = os.environ.get("BLOGGER_BLOG_ID", "DRY-RUN")
+    blog_id = os.environ.get("BLOGGER_BLOG_ID", "DRY-RUN").strip()
     if not a.dry_run and blog_id == "DRY-RUN":
         sys.exit("GitHub Secrets 에 없음: BLOGGER_BLOG_ID")
 
