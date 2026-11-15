@@ -48,3 +48,40 @@ def make(slug, meta, spec, html, render=True):
         render_spec(d / "spec.json", d)
     print(f"✓ {slug}: {len(re.sub('<[^>]+>', '', html)):,}자, 그림 {len(used)}개")
     return d
+
+
+# ── 시세 추세 그래픽 (데이터: tools/data/market/*.csv, '시세 데이터' 워크플로가 매일 갱신) ──
+MARKET = ROOT / "tools" / "data" / "market"
+MARKET_NAMES = {"KOSPI": "코스피", "KOSDAQ": "코스닥", "USDKRW": "원·달러 환율", "SP500": "S&P500",
+                "NASDAQ": "나스닥", "DOW": "다우", "DXY": "달러인덱스", "US10Y": "미 10년물 금리", "WTI": "WTI 유가"}
+
+
+def market_series(name, days=60, end=None):
+    """(dates, values). end='YYYY-MM-DD'면 그날까지(글 기준일 이후 데이터는 자름)."""
+    import csv
+    with open(MARKET / f"{name}.csv", encoding="utf-8") as f:
+        rows = [(r["date"], float(r["close"])) for r in csv.DictReader(f)]
+    from datetime import date
+    rows = [r for r in rows if date.fromisoformat(r[0]).weekday() < 5]  # 주말 값(환율 24시간 시세) 제외
+    if end:
+        rows = [r for r in rows if r[0] <= end]
+    rows = rows[-days:]
+    return [d for d, _ in rows], [v for _, v in rows]
+
+
+def trend_graphic(file, name, days=60, end=None, title=None, sub=None, check=None, alt=None, color="blue"):
+    """moneygraph trend 스펙 한 개. check=검증한 종가 → 마지막 값과 0.5% 넘게 다르면 멈춤."""
+    dates, vals = market_series(name, days, end)
+    if not vals:
+        raise ValueError(f"{name} 데이터 없음")
+    if check is not None and abs(vals[-1] - check) / check > 0.005:
+        raise ValueError(f"{name} 차트 마지막 값 {vals[-1]:,.2f}(={dates[-1]})가 확인한 종가 {check:,.2f}와 달라요")
+    label = MARKET_NAMES.get(name, name)
+    x = [d[5:].replace("-", "/") for d in dates]
+    unit = "원" if name == "USDKRW" else ""
+    return {"type": "trend", "file": file,
+            "title": title or f"{label}\n최근 {len(vals)}거래일",
+            "sub": sub or f"{dates[0][5:].replace('-', '/')}~{dates[-1][5:].replace('-', '/')} 일별 종가",
+            "x": x, "series": [{"name": label, "values": vals, "color": color}], "unit": unit,
+            "source": "Yahoo Finance 일별 종가" + (" (24시간 국제 시세라 서울 종가와 조금 달라요)" if name == "USDKRW" else ""),
+            "alt": alt or f"{label} 최근 {len(vals)}거래일 종가 추이 그래프"}
