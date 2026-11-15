@@ -82,7 +82,9 @@ def build_body(folder):
             print(f"  ! 이미지 파일 없음: {src}")
         return f'{m.group(1)}{(base or "") + urllib.parse.quote(src)}{m.group(3)}'
 
-    return re.sub(r'(<img[^>]*?\ssrc=")([^"]+)(")', fix, html)
+    html = re.sub(r'(<img[^>]*?\ssrc=")([^"]+)(")', fix, html)
+    # 편집기·RSS처럼 테마 CSS가 없는 곳에서도 폭에 맞게
+    return re.sub(r'<img(?![^>]*\sstyle=)', '<img style="max-width:100%;height:auto;display:block;margin:8px auto"', html)
 
 
 def main():
