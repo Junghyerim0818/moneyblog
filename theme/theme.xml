@@ -231,6 +231,43 @@ img{max-width:100%;height:auto;display:block}
 .widget.Profile{display:none !important}
 .widget.BlogSearch{grid-column:1/-1}
 
+/* ── 홈: 최신 글 + 인기 글 ── */
+.list-wrap:has(.home-pop){display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:48px;align-items:start}
+.list-wrap:has(.home-pop) .grid{grid-template-columns:repeat(2,1fr)}
+.home-pop{position:sticky;top:84px}
+.pop-list{list-style:none;margin:0;padding:8px 20px;background:var(--card);border-radius:var(--r)}
+.pop-list li{border-bottom:1px solid var(--line)}
+.pop-list li:last-child{border:0}
+.pop-list a{display:flex;gap:14px;align-items:flex-start;padding:16px 0;color:var(--text)}
+.pop-list b{flex:none;width:24px;font-size:18px;font-weight:800;color:var(--blue);line-height:1.4}
+.pop-list span{font-size:15px;font-weight:600;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pop-list a:hover span{color:var(--blue)}
+.popular-src{display:none !important}
+/* ── 홈: 주제별 슬라이드 ── */
+.topic-rows{margin-top:24px}
+.topic-row{margin-top:48px}
+.topic-row .section-title h2 small{margin-left:10px;font-size:14px;font-weight:600;color:var(--muted);letter-spacing:0}
+.row-ctl{display:flex;align-items:center;gap:6px}
+.row-ctl button{width:34px;height:34px;border:0;border-radius:50%;background:var(--card);color:var(--text);font-size:20px;line-height:1;cursor:pointer}
+.row-ctl button:hover{background:var(--blue-l);color:var(--blue)}
+.row-ctl a{margin-left:8px;font-size:14px;font-weight:700;color:var(--sub)}
+.slider{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 60px)/4);gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:4px}
+.slider::-webkit-scrollbar{display:none}
+.slider .card{scroll-snap-align:start}
+.slider .card h3{font-size:16px}
+.widget.BlogSearch{display:none !important}
+@media (max-width:900px){
+  .list-wrap:has(.home-pop){grid-template-columns:1fr;gap:8px}
+  .home-pop{position:static}
+  .slider{grid-auto-columns:calc((100% - 20px)/2.3)}
+}
+@media (max-width:600px){
+  .list-wrap:has(.home-pop) .grid{grid-template-columns:1fr}
+  .slider{grid-auto-columns:72%;gap:14px}
+  .row-ctl button{display:none}
+  .topic-row .section-title h2 small{display:block;margin:4px 0 0}
+}
+
   ]]></b:skin>
 </head>
 <body>
@@ -246,7 +283,7 @@ img{max-width:100%;height:auto;display:block}
       </b:widget>
     </b:section>
     <nav class='nav'>
-      <a expr:href='data:blog.homepageUrl + &quot;search/label/증권금융&quot;'>증권·금융</a>
+      <a expr:href='data:blog.homepageUrl + &quot;search/label/증권&quot;'>증권</a>
       <a expr:href='data:blog.homepageUrl + &quot;search/label/경제&quot;'>경제</a>
       <a expr:href='data:blog.homepageUrl + &quot;search/label/절세&quot;'>절세</a>
     </nav>
@@ -264,20 +301,22 @@ img{max-width:100%;height:auto;display:block}
           <b:if cond='data:view.isHomepage'>
             <section class='hero'>
               <h1>어려운 돈 이야기,<br/><b>숫자 하나</b>로 정리합니다</h1>
-              <p>주식·금융·경제·절세를 그래프와 표로 3분 안에.</p>
+              <p>증권·경제·절세를 그래프와 표로 3분 안에.</p>
               <div class='chips'>
                 <a expr:href='data:blog.homepageUrl + &quot;search/label/금융기초&quot;'>📈 금융 기초</a>
                 <a expr:href='data:blog.homepageUrl + &quot;search/label/경제용어&quot;'>📖 뉴스 속 경제 용어</a>
                 <a expr:href='data:blog.homepageUrl + &quot;search/label/절세&quot;'>🧾 절세</a>
               </div>
             </section>
-            <div class='section-title'><h2>최신 글</h2></div>
           <b:elseif cond='data:view.isLabelSearch'/>
             <section class='hero'><h1><b><data:view.search.label/></b></h1><p>카테고리 글 모음</p></section>
           <b:else/>
             <section class='hero'><h1>검색 결과</h1></section>
           </b:if>
 
+          <div class='list-wrap'>
+          <div class='list-main'>
+            <b:if cond='data:view.isHomepage'><div class='section-title'><h2>최신 글</h2></div></b:if>
             <div class='grid'>
               <b:loop index='i' values='data:posts' var='post'>
                 <a class='card' expr:href='data:post.url'>
@@ -305,6 +344,17 @@ img{max-width:100%;height:auto;display:block}
             <b:if cond='data:newerPageUrl'><a expr:href='data:newerPageUrl'>← 최신 글</a></b:if>
             <b:if cond='data:olderPageUrl'><a expr:href='data:olderPageUrl'>이전 글 →</a></b:if>
           </div>
+          </div>
+          <b:if cond='data:view.isHomepage'>
+            <aside class='home-pop'>
+              <div class='section-title'><h2>인기 글</h2></div>
+              <ol class='pop-list' id='pop-list'/>
+            </aside>
+          </b:if>
+          </div>
+          <b:if cond='data:view.isHomepage'>
+            <div class='topic-rows' id='topic-rows'/>
+          </b:if>
 
         <b:else/>
           <!-- ───────── 글 화면 ───────── -->
@@ -349,6 +399,24 @@ img{max-width:100%;height:auto;display:block}
     </b:widget>
   </b:section>
 
+  <b:section class='popular-src' id='popular' maxwidgets='1' showaddelement='no'>
+    <b:widget id='PopularPosts1' locked='true' title='인기 글' type='PopularPosts' version='2' visible='true'>
+      <b:widget-settings>
+        <b:widget-setting name='numItemsToShow'>5</b:widget-setting>
+        <b:widget-setting name='showThumbnails'>false</b:widget-setting>
+        <b:widget-setting name='showSnippets'>false</b:widget-setting>
+        <b:widget-setting name='timeRange'>LAST_MONTH</b:widget-setting>
+      </b:widget-settings>
+      <b:includable id='main'>
+        <ul class='pop-src'>
+          <b:loop values='data:posts' var='post'>
+            <li><a expr:href='data:post.url'><data:post.title/></a></li>
+          </b:loop>
+        </ul>
+      </b:includable>
+    </b:widget>
+  </b:section>
+
   <!-- 레이아웃 메뉴에서 애드센스·인기글 등 가젯을 추가하는 자리 -->
   <b:section class='extra' id='extra' showaddelement='yes'/>
 </main>
@@ -362,6 +430,46 @@ img{max-width:100%;height:auto;display:block}
 
 <script>//<![CDATA[
 (function(){
+  function feed(label,n,cb){
+    var name='mgF'+Math.random().toString(36).slice(2);
+    window[name]=function(j){cb((j.feed&&j.feed.entry)||[]);};
+    var sc=document.createElement('script');
+    sc.src='/feeds/posts/summary'+(label?'/-/'+encodeURIComponent(label):'')+'?alt=json-in-script&max-results='+n+'&callback='+name;
+    document.body.appendChild(sc);
+  }
+  function link(e){for(var k=0;k<e.link.length;k++){if(e.link[k].rel==='alternate')return e.link[k].href;}return '#';}
+  function thumb(e){return e.media$thumbnail?e.media$thumbnail.url.replace(/\/s72(-c)?\//,'/w600-h315-p-k-no-nu/').replace(/=s72(-c)?$/,'=w600-h315-p-k-no-nu'):'';}
+  function esc(t){var d=document.createElement('div');d.textContent=t;return d.innerHTML;}
+  /* 인기 글: 블로거 통계 → 없으면 최신 글로 채움 */
+  var pop=document.getElementById('pop-list');
+  if(pop){
+    var src=document.querySelectorAll('.pop-src a');
+    if(src.length){
+      for(var i=0;i<src.length;i++){pop.innerHTML+='<li><a href="'+src[i].href+'"><b>'+(i+1)+'</b><span>'+esc(src[i].textContent)+'</span></a></li>';}
+    }else{
+      feed('',5,function(es){
+        if(!es.length){pop.parentNode.style.display='none';return;}
+        es.forEach(function(e,i){pop.innerHTML+='<li><a href="'+link(e)+'"><b>'+(i+1)+'</b><span>'+esc(e.title.$t)+'</span></a></li>';});
+      });
+    }
+  }
+  /* 주제별 슬라이드 */
+  var rows=document.getElementById('topic-rows');
+  if(rows){
+    [['증권','금융 기초 · 주식 · ETF'],['경제','뉴스 속 경제 용어 · 금리 · 환율'],['절세','연말정산 · 연금저축 · 주식 세금']].forEach(function(t){
+      var row=document.createElement('section');row.className='topic-row';row.style.display='none';
+      row.innerHTML='<div class="section-title"><h2>'+t[0]+'<small>'+t[1]+'</small></h2><span class="row-ctl"><button type="button" aria-label="이전">‹</button><button type="button" aria-label="다음">›</button><a href="/search/label/'+encodeURIComponent(t[0])+'">전체 보기</a></span></div><div class="slider"></div>';
+      rows.appendChild(row);
+      var sl=row.querySelector('.slider'), bs=row.querySelectorAll('button');
+      bs[0].onclick=function(){sl.scrollBy({left:-sl.clientWidth*0.9,behavior:'smooth'});};
+      bs[1].onclick=function(){sl.scrollBy({left:sl.clientWidth*0.9,behavior:'smooth'});};
+      feed(t[0],12,function(es){
+        if(!es.length) return;
+        es.forEach(function(e){var im=thumb(e);sl.innerHTML+='<a class="card" href="'+link(e)+'">'+(im?'<div class="thumb"><img loading="lazy" src="'+im+'" alt=""></div>':'<div class="thumb empty"></div>')+'<h3>'+esc(e.title.$t)+'</h3></a>';});
+        row.style.display='';
+      });
+    });
+  }
   document.querySelectorAll('.grid:not(#related-grid)').forEach(function(g){
     if(!g.querySelector('.card')){var d=document.createElement('div');d.className='empty-state';d.innerHTML='<b>첫 글을 준비하고 있어요</b><span>곧 그래프로 정리한 돈 이야기가 올라옵니다.</span>';g.replaceWith(d);}
   });
