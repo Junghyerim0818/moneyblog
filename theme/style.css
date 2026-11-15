@@ -145,31 +145,31 @@ img{max-width:100%;height:auto;display:block}
 .btn{display:inline-block;padding:14px 28px;border-radius:14px;background:var(--blue);color:#fff;font-weight:700}
 
 /* 아래 가젯 영역 (레이아웃 메뉴에서 넣은 가젯·블로거 기본 가젯) */
-.extra{margin:56px 0 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.extra,.section:not(.main):not(.brand){margin:56px 0 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
 .extra:empty{display:none}
-.extra .widget{background:var(--card);border-radius:var(--r);padding:22px;margin:0;font-size:15px;color:var(--sub)}
-.extra .widget h2,.extra .widget h3.title{font-size:15px;font-weight:800;color:var(--text);margin:0 0 12px}
-.extra .widget a{color:var(--text);font-weight:600}
-.extra .widget ul{list-style:none;padding:0;margin:0}
-.extra .widget li{padding:6px 0;border-bottom:1px solid var(--line)}
-.extra .widget li:last-child{border:0}
-.extra .widget img{border-radius:12px}
+.widget:not(.Header,.Blog){background:var(--card);border-radius:var(--r);padding:22px;margin:0;font-size:15px;color:var(--sub)}
+.widget:not(.Header,.Blog) h2,.widget:not(.Header,.Blog) h3.title{font-size:15px;font-weight:800;color:var(--text);margin:0 0 12px}
+.widget:not(.Header,.Blog) a{color:var(--text);font-weight:600}
+.widget:not(.Header,.Blog) ul{list-style:none;padding:0;margin:0}
+.widget:not(.Header,.Blog) li{padding:6px 0;border-bottom:1px solid var(--line)}
+.widget:not(.Header,.Blog) li:last-child{border:0}
+.widget:not(.Header,.Blog) img{border-radius:12px}
 /* 검색창 */
-.extra .BlogSearch form{display:flex;gap:8px;width:100%}
-.extra .BlogSearch .search-input{flex:1;min-width:0;display:flex}
-.extra .BlogSearch input[type=text],.extra .BlogSearch input[type=search],.extra .BlogSearch input:not([type]){flex:1;width:100%;min-width:0;height:46px;border:1px solid var(--line);border-radius:12px;padding:0 14px;font:inherit;font-size:15px;background:#fff;color:var(--text)}
-.extra .BlogSearch input:focus{outline:2px solid var(--blue);outline-offset:-1px;border-color:transparent}
-.extra .BlogSearch input[type=submit],.extra .BlogSearch button{height:46px;padding:0 18px;border:0;border-radius:12px;background:var(--blue);color:#fff;font:inherit;font-weight:700;cursor:pointer}
+.widget.BlogSearch form{display:flex;gap:8px;width:100%}
+.widget.BlogSearch .search-input{flex:1;min-width:0;display:flex}
+.widget.BlogSearch input[type=text],.widget.BlogSearch input[type=search],.widget.BlogSearch input:not([type]){flex:1;width:100%;min-width:0;height:46px;border:1px solid var(--line);border-radius:12px;padding:0 14px;font:inherit;font-size:15px;background:#fff;color:var(--text)}
+.widget.BlogSearch input:focus{outline:2px solid var(--blue);outline-offset:-1px;border-color:transparent}
+.widget.BlogSearch input[type=submit],.widget.BlogSearch button{height:46px;padding:0 18px;border:0;border-radius:12px;background:var(--blue);color:#fff;font:inherit;font-weight:700;cursor:pointer}
 /* 프로필 */
-.extra .Profile .profile-img{width:56px;height:56px;border-radius:50%;float:left;margin:0 14px 0 0}
-.extra .Profile .profile-name-link,.extra .Profile .profile-link{display:block;font-weight:700;color:var(--text);background:none !important;padding:0 !important;min-height:0 !important}
+.widget.Profile .profile-img{width:56px;height:56px;border-radius:50%;float:left;margin:0 14px 0 0}
+.widget.Profile .profile-name-link,.widget.Profile .profile-link{display:block;font-weight:700;color:var(--text);background:none !important;padding:0 !important;min-height:0 !important}
 /* 블로거 기본 표시는 작게 */
-.extra .Attribution{background:none;padding:0;grid-column:1/-1;text-align:center;font-size:12px;color:var(--muted)}
-.extra .Attribution img,.extra .Attribution svg{display:none}
-.extra .Attribution a{color:var(--muted);font-weight:400}
-.extra .ReportAbuse{background:none;padding:0;grid-column:1/-1;text-align:center;font-size:12px}
-.extra .ReportAbuse h3,.extra .ReportAbuse h2{display:inline;font-size:12px;font-weight:400;margin:0}
-.extra .ReportAbuse a{color:var(--muted);font-weight:400}
+.widget.Attribution{background:none;padding:0;grid-column:1/-1;text-align:center;font-size:12px;color:var(--muted)}
+.widget.Attribution img,.widget.Attribution svg{display:none}
+.widget.Attribution a{color:var(--muted);font-weight:400}
+.widget.ReportAbuse{background:none;padding:0;grid-column:1/-1;text-align:center;font-size:12px}
+.widget.ReportAbuse h3,.widget.ReportAbuse h2{display:inline;font-size:12px;font-weight:400;margin:0}
+.widget.ReportAbuse a{color:var(--muted);font-weight:400}
 .foot{margin-top:72px;border-top:1px solid var(--line);padding:32px 0 48px;color:var(--muted);font-size:14px}
 .foot .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .foot a{margin-left:16px}
@@ -195,3 +195,6 @@ img{max-width:100%;height:auto;display:block}
   .post-body table{font-size:14px}
   .post-body td,.post-body th{padding:12px 8px}
 }
+
+.widget.Label:not(:has(a)),.widget.PopularPosts:not(:has(a)){display:none}
+.widget.Attribution .copyright{display:block;margin-top:4px}
