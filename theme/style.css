@@ -215,3 +215,4 @@ img{max-width:100%;height:auto;display:block}
 .section:has(> .widget.Blog){margin-top:0}
 
 .widget.Profile{display:none !important}
+.widget.BlogSearch{grid-column:1/-1}
