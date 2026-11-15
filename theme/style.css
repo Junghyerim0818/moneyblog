@@ -253,3 +253,5 @@ img{max-width:100%;height:auto;display:block}
   .row-ctl button{display:none}
   .topic-row .section-title h2 small{display:block;margin:4px 0 0}
 }
+/* 블로거 기본 가젯 숨김 (탭·슬라이드로 대체) */
+.widget.BlogArchive,.widget.Label,.widget.FeaturedPost,.widget.BlogSearch,.widget.Profile,.widget.PageList,.widget.Followers,.widget.Subscribe{display:none !important}
