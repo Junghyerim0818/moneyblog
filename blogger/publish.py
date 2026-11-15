@@ -167,7 +167,14 @@ def main():
             print(f"  본문 {len(post['content']):,}자, 이미지 {post['content'].count('<img')}개, 라벨 {post['labels']}")
             continue
         try:
-            res = call("POST", f"{API}/blogs/{blog_id}/posts?isDraft=true", post, token)
+            slug = meta.get("slug")
+            if slug and mode == "publish":
+                # 블로거 주소는 공개 순간의 제목으로 정해짐 → 영어 slug 제목으로 공개 후 진짜 제목으로 바로 수정
+                res = call("POST", f"{API}/blogs/{blog_id}/posts", {**post, "title": slug}, token)
+                res = call("PATCH", f"{API}/blogs/{blog_id}/posts/{res['id']}", {"title": meta["title"]}, token)
+                mode = "published"
+            else:
+                res = call("POST", f"{API}/blogs/{blog_id}/posts?isDraft=true", post, token)
         except RateLimited:
             left = len(todo) - n
             print(f"요청 한도가 풀리지 않아 멈춤. 남은 {left}개는 다음 실행 때 이어서 올립니다.")
@@ -177,6 +184,8 @@ def main():
             res = call("POST", f"{API}/blogs/{blog_id}/posts/{res['id']}/publish?publishDate={urllib.parse.quote(when)}", {}, token)
         elif mode == "publish":
             res = call("POST", f"{API}/blogs/{blog_id}/posts/{res['id']}/publish", {}, token)
+        if mode == "published":
+            mode = "publish"
         state = {"draft": "임시저장", "schedule": f"예약 {meta.get('at')}", "publish": "발행"}[mode]
         print(f"  → {state} 완료 (id {res['id']}) {res.get('url', '')}")
         (f / "posted.json").write_text(json.dumps({"id": res["id"], "url": res.get("url"), "mode": mode,
