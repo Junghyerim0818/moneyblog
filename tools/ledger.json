@@ -1,6 +1,8 @@
 {
  "_설명": "매일 자동 작업이 쓰는 중복 방지 기록. 새 글을 올릴 때마다 해당 목록에 추가.",
- "econ_terms_deep": [],
+ "econ_terms_deep": [
+  "순환금융"
+ ],
  "econ_terms_basics": [
   "기준금리",
   "베이비스텝",
@@ -41,7 +43,13 @@
   "YoY·MoM",
   "%p"
  ],
- "market_posts": [],
+ "market_posts": [
+  {
+   "date": "2026-11-16",
+   "type": "월요일 주간 미리보기",
+   "slug": "market-2026-11-16"
+  }
+ ],
  "tax_posts": [
   "2026 연말정산 미리보기",
   "연금저축 vs IRP",
