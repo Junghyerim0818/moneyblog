@@ -210,3 +210,6 @@ img{max-width:100%;height:auto;display:block}
 .widget.Profile .widget-content > *{margin:0 0 6px}
 @media (max-width:600px){.section:has(> .widget.BlogSearch),.section:has(> .widget.Profile),.extra{grid-template-columns:1fr}}
 .widget.ReportAbuse,.widget.ReportAbuse *{font-size:12px !important;font-weight:400 !important;color:var(--muted) !important;text-align:center;margin:0 !important}
+/* 위젯이 본문 영역에 같이 들어간 경우: 본문은 한 줄 전체, 위젯은 그 아래 */
+.section > .widget.Blog,.section > .widget.Header{grid-column:1/-1;order:-1;margin:0 0 40px !important;background:none !important;padding:0 !important}
+.section:has(> .widget.Blog){margin-top:0}
