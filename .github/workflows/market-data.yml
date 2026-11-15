@@ -1,0 +1,33 @@
+name: 시세 데이터
+
+on:
+  schedule:
+    - cron: "10 21 * * *"   # 매일 06:10 KST (아침 글 쓰기 전)
+    - cron: "10 9 * * 1-5"  # 평일 18:10 KST (저녁 속보 점검 전)
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: market-data
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: 지수·환율 종가 받기
+        run: python tools/fetch_market.py
+      - name: 저장
+        run: |
+          git config user.name "market-data-bot"
+          git config user.email "market-data-bot@users.noreply.github.com"
+          git add tools/data/market
+          git diff --cached --quiet && exit 0
+          git commit -m "시세 데이터 갱신 [skip ci]"
+          for i in 1 2 3; do git pull --rebase && git push && break; sleep 5; done
