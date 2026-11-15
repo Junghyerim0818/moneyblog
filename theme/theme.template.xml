@@ -48,10 +48,9 @@
               <h1>어려운 돈 이야기,<br/><b>숫자 하나</b>로 정리합니다</h1>
               <p>주식·금융·경제·절세를 그래프와 표로 3분 안에.</p>
               <div class='chips'>
-                <a expr:href='data:blog.homepageUrl + &quot;search/label/주식기초&quot;'>📈 주식 기초</a>
+                <a expr:href='data:blog.homepageUrl + &quot;search/label/금융기초&quot;'>📈 금융 기초</a>
                 <a expr:href='data:blog.homepageUrl + &quot;search/label/경제용어&quot;'>📖 뉴스 속 경제 용어</a>
-                <a expr:href='data:blog.homepageUrl + &quot;search/label/연말정산&quot;'>🧾 연말정산</a>
-                <a expr:href='data:blog.homepageUrl + &quot;search/label/연금저축&quot;'>🏦 연금저축·IRP</a>
+                <a expr:href='data:blog.homepageUrl + &quot;search/label/절세&quot;'>🧾 절세</a>
               </div>
             </section>
             <div class='section-title'><h2>최신 글</h2></div>

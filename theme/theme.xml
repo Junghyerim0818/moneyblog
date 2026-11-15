@@ -161,13 +161,13 @@ img{max-width:100%;height:auto;display:block}
 /* 아래 가젯 영역 (레이아웃 메뉴에서 넣은 가젯·블로거 기본 가젯) */
 .extra,.section:not(.main):not(.brand){margin:56px 0 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
 .extra:empty{display:none}
-.widget:not(.Header,.Blog){background:var(--card);border-radius:var(--r);padding:22px;margin:0;font-size:15px;color:var(--sub)}
-.widget:not(.Header,.Blog) h2,.widget:not(.Header,.Blog) h3.title{font-size:15px;font-weight:800;color:var(--text);margin:0 0 12px}
-.widget:not(.Header,.Blog) a{color:var(--text);font-weight:600}
-.widget:not(.Header,.Blog) ul{list-style:none;padding:0;margin:0}
-.widget:not(.Header,.Blog) li{padding:6px 0;border-bottom:1px solid var(--line)}
-.widget:not(.Header,.Blog) li:last-child{border:0}
-.widget:not(.Header,.Blog) img{border-radius:12px}
+.widget:not(.Header,.Blog,.Profile){background:var(--card);border-radius:var(--r);padding:22px;margin:0;font-size:15px;color:var(--sub)}
+.widget:not(.Header,.Blog,.Profile) h2,.widget:not(.Header,.Blog,.Profile) h3.title{font-size:15px;font-weight:800;color:var(--text);margin:0 0 12px}
+.widget:not(.Header,.Blog,.Profile) a{color:var(--text);font-weight:600}
+.widget:not(.Header,.Blog,.Profile) ul{list-style:none;padding:0;margin:0}
+.widget:not(.Header,.Blog,.Profile) li{padding:6px 0;border-bottom:1px solid var(--line)}
+.widget:not(.Header,.Blog,.Profile) li:last-child{border:0}
+.widget:not(.Header,.Blog,.Profile) img{border-radius:12px}
 /* 검색창 */
 .widget.BlogSearch form{display:flex;gap:8px;width:100%}
 .widget.BlogSearch .search-input{flex:1;min-width:0;display:flex}
@@ -225,8 +225,10 @@ img{max-width:100%;height:auto;display:block}
 @media (max-width:600px){.section:has(> .widget.BlogSearch),.section:has(> .widget.Profile),.extra{grid-template-columns:1fr}}
 .widget.ReportAbuse,.widget.ReportAbuse *{font-size:12px !important;font-weight:400 !important;color:var(--muted) !important;text-align:center;margin:0 !important}
 /* 위젯이 본문 영역에 같이 들어간 경우: 본문은 한 줄 전체, 위젯은 그 아래 */
-.section > .widget.Blog,.section > .widget.Header{grid-column:1/-1;order:-1;margin:0 0 40px !important;background:none !important;padding:0 !important}
+.section > .widget.Blog{grid-column:1/-1;order:-1;margin:0 0 40px !important;background:none !important;padding:0 !important}
 .section:has(> .widget.Blog){margin-top:0}
+
+.widget.Profile{display:none !important}
 
   ]]></b:skin>
 </head>
@@ -263,10 +265,9 @@ img{max-width:100%;height:auto;display:block}
               <h1>어려운 돈 이야기,<br/><b>숫자 하나</b>로 정리합니다</h1>
               <p>주식·금융·경제·절세를 그래프와 표로 3분 안에.</p>
               <div class='chips'>
-                <a expr:href='data:blog.homepageUrl + &quot;search/label/주식기초&quot;'>📈 주식 기초</a>
+                <a expr:href='data:blog.homepageUrl + &quot;search/label/금융기초&quot;'>📈 금융 기초</a>
                 <a expr:href='data:blog.homepageUrl + &quot;search/label/경제용어&quot;'>📖 뉴스 속 경제 용어</a>
-                <a expr:href='data:blog.homepageUrl + &quot;search/label/연말정산&quot;'>🧾 연말정산</a>
-                <a expr:href='data:blog.homepageUrl + &quot;search/label/연금저축&quot;'>🏦 연금저축·IRP</a>
+                <a expr:href='data:blog.homepageUrl + &quot;search/label/절세&quot;'>🧾 절세</a>
               </div>
             </section>
             <div class='section-title'><h2>최신 글</h2></div>
