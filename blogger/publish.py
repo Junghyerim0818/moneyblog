@@ -24,6 +24,9 @@ import urllib.request
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import coupang  # noqa: E402
+
 KST = timezone(timedelta(hours=9))
 ROOT = Path(__file__).resolve().parents[1]
 API = "https://www.googleapis.com/blogger/v3"
@@ -160,7 +163,8 @@ def main():
             time.sleep(15)  # 블로거 API 요청 한도 여유
         meta = json.loads((f / "meta.json").read_text(encoding="utf-8"))
         mode = meta.get("mode", "draft")
-        post = {"kind": "blogger#post", "title": meta["title"], "content": build_body(f),
+        body = build_body(f) if a.dry_run else coupang.apply(build_body(f), meta)
+        post = {"kind": "blogger#post", "title": meta["title"], "content": body,
                 "labels": meta.get("labels", [])[:20]}
         print(f"- {f.name}: {meta['title']} ({mode})")
         if a.dry_run:

@@ -1,0 +1,22 @@
+name: 쿠팡 연결 테스트
+
+on:
+  workflow_dispatch:
+    inputs:
+      keyword:
+        description: "검색해 볼 키워드"
+        default: "주식 투자 입문 책"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: 쿠팡 파트너스 API 확인
+        env:
+          COUPANG_ACCESS_KEY: ${{ secrets.COUPANG_ACCESS_KEY }}
+          COUPANG_SECRET_KEY: ${{ secrets.COUPANG_SECRET_KEY }}
+        run: python blogger/coupang.py --test "${{ inputs.keyword }}"
