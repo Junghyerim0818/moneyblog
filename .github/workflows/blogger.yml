@@ -1,0 +1,36 @@
+name: 블로거 게시
+
+on:
+  push:
+    branches: [main]
+    paths: ["posts/**"]
+  workflow_dispatch: {}
+
+permissions:
+  contents: write   # 올린 기록(posted.json)을 저장소에 다시 커밋
+
+concurrency:
+  group: blogger
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: 새 글을 블로거로
+        env:
+          BLOGGER_CLIENT_ID: ${{ secrets.BLOGGER_CLIENT_ID }}
+          BLOGGER_CLIENT_SECRET: ${{ secrets.BLOGGER_CLIENT_SECRET }}
+          BLOGGER_REFRESH_TOKEN: ${{ secrets.BLOGGER_REFRESH_TOKEN }}
+          BLOGGER_BLOG_ID: ${{ secrets.BLOGGER_BLOG_ID }}
+        run: python blogger/publish.py
+      - name: 올린 기록 저장
+        run: |
+          git config user.name "blogger-bot"
+          git config user.email "blogger-bot@users.noreply.github.com"
+          git add posts/*/posted.json 2>/dev/null || true
+          git diff --cached --quiet || (git commit -m "블로거 게시 기록 [skip ci]" && git push)

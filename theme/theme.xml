@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html b:css='false' b:defaultwidgetversion='2' b:layoutsVersion='3' b:responsive='true' b:templateVersion='1.0.0' expr:dir='data:blog.languageDirection' lang='ko' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<head>
+  <meta content='width=device-width, initial-scale=1' name='viewport'/>
+  <b:if cond='data:view.isHomepage'>
+    <title><data:blog.title/></title>
+  <b:else/>
+    <title><data:view.title.escaped/> | <data:blog.title/></title>
+  </b:if>
+  <b:include data='blog' name='all-head-content'/>
+  <meta content='#FFFFFF' name='theme-color'/>
+  <link crossorigin='anonymous' href='https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css' rel='stylesheet'/>
+  <b:skin version='1.0.0'><![CDATA[
+/* 한눈머니 — 토스·뱅크샐러드 톤 블로거 테마 */
+:root{
+  --bg:#FFFFFF; --card:#F2F4F6; --card2:#F9FAFB; --line:#E5E8EB;
+  --text:#191F28; --sub:#4E5968; --muted:#8B95A1;
+  --blue:#3182F6; --blue-l:#E8F3FF; --blue-d:#1B64DA;
+  --up:#F04452; --up-l:#FFEEEE; --down:#3182F6;
+  --green:#15C47E; --green-l:#E5F8EF; --yellow-l:#FFF8E1; --navy:#202632;
+  --r:20px; --r-s:12px; --w:720px; --w-wide:1080px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);
+  font-family:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  font-size:17px;line-height:1.75;letter-spacing:-0.01em;word-break:keep-all;overflow-wrap:anywhere}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;height:auto;display:block}
+.wrap{max-width:var(--w-wide);margin:0 auto;padding:0 20px}
+
+/* 상단 */
+.top{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.92);backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:20px;height:64px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;letter-spacing:-0.03em;white-space:nowrap}
+.logo i{width:28px;height:28px;border-radius:9px;background:var(--blue);display:inline-flex;align-items:center;justify-content:center;color:#fff;font-style:normal;font-size:15px}
+.nav{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;margin-left:auto}
+.nav::-webkit-scrollbar{display:none}
+.nav a{padding:8px 14px;border-radius:999px;font-size:15px;font-weight:600;color:var(--sub);white-space:nowrap}
+.nav a:hover,.nav a.on{background:var(--card);color:var(--text)}
+.progress{position:absolute;left:0;bottom:-1px;height:3px;width:0;background:var(--blue);transition:width .1s}
+
+/* 메인 히어로 */
+.hero{padding:56px 0 24px}
+.hero h1{margin:0;font-size:40px;line-height:1.3;font-weight:800;letter-spacing:-0.03em}
+.hero h1 b{color:var(--blue)}
+.hero p{margin:12px 0 0;color:var(--sub);font-size:18px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:28px 0 8px}
+.chips a{padding:10px 16px;border-radius:999px;background:var(--card);font-weight:600;font-size:15px;color:var(--sub)}
+.chips a:hover{background:var(--blue-l);color:var(--blue)}
+
+/* 글 목록 카드 */
+.section-title{display:flex;align-items:baseline;justify-content:space-between;margin:40px 0 16px}
+.section-title h2{margin:0;font-size:22px;font-weight:800;letter-spacing:-0.02em}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px 20px}
+.card{display:flex;flex-direction:column;gap:12px}
+.card .thumb{aspect-ratio:1200/630;border-radius:var(--r);overflow:hidden;background:var(--card)}
+.card .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .3s}
+.card:hover .thumb img{transform:scale(1.03)}
+.card .thumb.empty{display:flex;align-items:center;justify-content:center;color:var(--muted);font-weight:700}
+.card .lab{font-size:13px;font-weight:700;color:var(--blue)}
+.card h3{margin:0;font-size:19px;line-height:1.45;font-weight:700;letter-spacing:-0.02em;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card p{margin:0;color:var(--sub);font-size:15px;line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card time{font-size:13px;color:var(--muted)}
+.card.is-featured{grid-column:1/-1;display:grid;grid-template-columns:1.25fr 1fr;gap:32px;align-items:center;padding-bottom:12px;border-bottom:1px solid var(--line);margin-bottom:12px}
+.card.is-featured h3{font-size:30px;line-height:1.35;-webkit-line-clamp:3}
+.card.is-featured p{font-size:17px;-webkit-line-clamp:3}
+.pager{display:flex;justify-content:center;gap:12px;margin:48px 0}
+.pager a{padding:14px 24px;border-radius:14px;background:var(--card);font-weight:700}
+.pager a:hover{background:var(--blue-l);color:var(--blue)}
+.empty-msg{padding:80px 0;text-align:center;color:var(--muted)}
+
+/* 글 화면 */
+.post{max-width:var(--w);margin:0 auto;padding:40px 0 24px}
+.post .crumb{font-size:14px;font-weight:700;color:var(--blue)}
+.post h1{margin:10px 0 14px;font-size:34px;line-height:1.35;font-weight:800;letter-spacing:-0.03em}
+.post .meta{display:flex;gap:10px;align-items:center;color:var(--muted);font-size:14px;padding-bottom:28px;border-bottom:1px solid var(--line)}
+.post .meta .dot{width:3px;height:3px;border-radius:50%;background:var(--muted)}
+.post-body{padding-top:28px}
+.post-body h2{font-size:26px;line-height:1.4;font-weight:800;letter-spacing:-0.025em;margin:64px 0 18px;scroll-margin-top:84px}
+.post-body h3{font-size:20px;font-weight:700;margin:40px 0 12px}
+.post-body p{margin:0 0 20px}
+.post-body b,.post-body strong{font-weight:700}
+.post-body a{color:var(--blue);font-weight:600}
+.post-body ul,.post-body ol{padding-left:22px;margin:0 0 22px}
+.post-body li{margin:6px 0}
+.post-body li::marker{color:var(--blue)}
+.post-body img,.post-body .separator img{border-radius:var(--r);margin:8px auto}
+.post-body .separator{margin:28px 0 !important}
+.post-body .separator a{margin:0 !important}
+.post-body figure{margin:32px 0}
+.post-body figcaption,.post-body .tr-caption{display:block;text-align:center;font-size:14px;color:var(--muted);margin-top:8px}
+.post-body hr{border:0;height:1px;background:var(--line);margin:48px 0}
+.post-body blockquote{margin:28px 0;padding:22px 26px;border-radius:var(--r);background:var(--card);font-size:19px;font-weight:600;line-height:1.6}
+
+/* 표 */
+.post-body table{width:100%;border-collapse:separate;border-spacing:0;margin:24px 0 32px;font-size:15.5px;border-radius:var(--r);overflow:hidden;background:var(--card2);border:1px solid var(--line)}
+.post-body th{background:var(--card);color:var(--sub);font-weight:700;font-size:14px;padding:14px 12px;text-align:center;border:0}
+.post-body td{padding:14px 12px;text-align:center;border:0;border-top:1px solid var(--line)}
+.post-body td:first-child{text-align:left;font-weight:600;padding-left:18px}
+.post-body th:first-child{text-align:left;padding-left:18px}
+.post-body tr.hl td{background:var(--blue-l);color:var(--blue-d);font-weight:700}
+.post-body td.hl{color:var(--blue);font-weight:800}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+/* 본문 컴포넌트 */
+.mg-lead{background:var(--blue-l);border-radius:var(--r);padding:24px 26px;margin:0 0 32px}
+.mg-lead .t{font-weight:800;color:var(--blue);font-size:15px;margin-bottom:8px;display:flex;gap:8px;align-items:center}
+.mg-lead ul{margin:0;padding-left:20px}
+.mg-lead li{margin:4px 0;font-weight:600}
+.mg-toc{background:var(--card);border-radius:var(--r);padding:22px 26px;margin:0 0 40px}
+.mg-toc .t{font-weight:800;font-size:15px;color:var(--sub);margin-bottom:8px}
+.mg-toc ol{margin:0;padding-left:20px;counter-reset:none}
+.mg-toc a{color:var(--text);font-weight:600}
+.mg-toc a:hover{color:var(--blue)}
+.mg-kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:24px 0 32px}
+.mg-kpi{background:var(--card);border-radius:var(--r);padding:20px 22px}
+.mg-kpi .k-label{font-size:14px;font-weight:600;color:var(--sub)}
+.mg-kpi .k-value{font-size:28px;font-weight:800;letter-spacing:-0.03em;line-height:1.3;margin-top:4px}
+.mg-kpi .k-delta{font-size:14px;font-weight:700;margin-top:4px;color:var(--muted)}
+.mg-kpi .k-delta.up{color:var(--up)} .mg-kpi .k-delta.down{color:var(--down)}
+.mg-kpi .k-delta.up::before{content:"▲ "} .mg-kpi .k-delta.down::before{content:"▼ "}
+.mg-callout{display:flex;gap:14px;border-radius:var(--r);padding:20px 22px;margin:24px 0;background:var(--card)}
+.mg-callout::before{content:"💡";font-size:20px;line-height:1.5}
+.mg-callout.todo{background:var(--blue-l)} .mg-callout.todo::before{content:"✅"}
+.mg-callout.warn{background:var(--up-l)} .mg-callout.warn::before{content:"⚠️"}
+.mg-callout p{margin:0}
+.mg-steps{list-style:none;padding:0 !important;margin:24px 0 32px;counter-reset:step}
+.mg-steps li{position:relative;padding:18px 20px 18px 64px;background:var(--card);border-radius:var(--r);margin:10px 0;counter-increment:step}
+.mg-steps li::before{content:counter(step);position:absolute;left:20px;top:18px;width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center}
+.mg-steps li b{display:block;margin-bottom:2px}
+.mg-faq details{border-bottom:1px solid var(--line);padding:4px 0}
+.mg-faq summary{cursor:pointer;list-style:none;padding:16px 36px 16px 0;font-weight:700;position:relative}
+.mg-faq summary::-webkit-details-marker{display:none}
+.mg-faq summary::before{content:"Q.";color:var(--blue);margin-right:8px}
+.mg-faq summary::after{content:"+";position:absolute;right:6px;top:12px;font-size:22px;color:var(--muted);font-weight:400}
+.mg-faq details[open] summary::after{content:"−"}
+.mg-faq details p{margin:0 0 18px;color:var(--sub)}
+.mg-source{background:var(--card2);border:1px solid var(--line);border-radius:var(--r);padding:20px 24px;font-size:14px;color:var(--sub);margin:48px 0 16px}
+.mg-source .t{font-weight:800;margin-bottom:6px;color:var(--text)}
+.mg-source ul{margin:0;padding-left:18px}
+.mg-note{font-size:13.5px;color:var(--muted);line-height:1.65}
+.up{color:var(--up)} .down{color:var(--down)}
+
+/* 글 아래 */
+.post-labels{display:flex;flex-wrap:wrap;gap:8px;margin:32px 0 0}
+.post-labels a{padding:8px 14px;border-radius:999px;background:var(--card);font-size:14px;font-weight:600;color:var(--sub)}
+.related{max-width:var(--w);margin:24px auto 0;padding:32px 0 0;border-top:1px solid var(--line)}
+.related h2{font-size:20px;margin:0 0 16px;font-weight:800}
+.related .grid{grid-template-columns:repeat(2,1fr);gap:20px}
+.related .card h3{font-size:16px}
+
+/* 404 */
+.notfound{max-width:var(--w);margin:0 auto;padding:96px 0 40px;text-align:center}
+.notfound .code{font-size:72px;font-weight:800;color:var(--blue);letter-spacing:-0.04em;line-height:1}
+.notfound h1{font-size:28px;margin:16px 0 8px;font-weight:800}
+.notfound p{color:var(--sub);margin:0 0 28px}
+.btn{display:inline-block;padding:14px 28px;border-radius:14px;background:var(--blue);color:#fff;font-weight:700}
+
+/* 아래 가젯 영역 (레이아웃 메뉴에서 넣은 가젯·블로거 기본 가젯) */
+.extra{margin:56px 0 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.extra:empty{display:none}
+.extra .widget{background:var(--card);border-radius:var(--r);padding:22px;margin:0;font-size:15px;color:var(--sub)}
+.extra .widget h2,.extra .widget h3.title{font-size:15px;font-weight:800;color:var(--text);margin:0 0 12px}
+.extra .widget a{color:var(--text);font-weight:600}
+.extra .widget ul{list-style:none;padding:0;margin:0}
+.extra .widget li{padding:6px 0;border-bottom:1px solid var(--line)}
+.extra .widget li:last-child{border:0}
+.extra .widget img{border-radius:12px}
+/* 검색창 */
+.extra .BlogSearch form{display:flex;gap:8px;width:100%}
+.extra .BlogSearch .search-input{flex:1;min-width:0;display:flex}
+.extra .BlogSearch input[type=text],.extra .BlogSearch input[type=search],.extra .BlogSearch input:not([type]){flex:1;width:100%;min-width:0;height:46px;border:1px solid var(--line);border-radius:12px;padding:0 14px;font:inherit;font-size:15px;background:#fff;color:var(--text)}
+.extra .BlogSearch input:focus{outline:2px solid var(--blue);outline-offset:-1px;border-color:transparent}
+.extra .BlogSearch input[type=submit],.extra .BlogSearch button{height:46px;padding:0 18px;border:0;border-radius:12px;background:var(--blue);color:#fff;font:inherit;font-weight:700;cursor:pointer}
+/* 프로필 */
+.extra .Profile .profile-img{width:56px;height:56px;border-radius:50%;float:left;margin:0 14px 0 0}
+.extra .Profile .profile-name-link,.extra .Profile .profile-link{display:block;font-weight:700;color:var(--text);background:none !important;padding:0 !important;min-height:0 !important}
+/* 블로거 기본 표시는 작게 */
+.extra .Attribution{background:none;padding:0;grid-column:1/-1;text-align:center;font-size:12px;color:var(--muted)}
+.extra .Attribution img,.extra .Attribution svg{display:none}
+.extra .Attribution a{color:var(--muted);font-weight:400}
+.extra .ReportAbuse{background:none;padding:0;grid-column:1/-1;text-align:center;font-size:12px}
+.extra .ReportAbuse h3,.extra .ReportAbuse h2{display:inline;font-size:12px;font-weight:400;margin:0}
+.extra .ReportAbuse a{color:var(--muted);font-weight:400}
+.foot{margin-top:72px;border-top:1px solid var(--line);padding:32px 0 48px;color:var(--muted);font-size:14px}
+.foot .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.foot a{margin-left:16px}
+
+@media (max-width:900px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .card.is-featured{grid-template-columns:1fr;gap:16px}
+}
+@media (max-width:600px){
+  body{font-size:16.5px}
+  .top .wrap{height:56px}
+  .logo span{display:none}
+  .hero{padding:32px 0 8px}
+  .hero h1{font-size:28px}
+  .grid,.related .grid{grid-template-columns:1fr;gap:24px}
+  .card.is-featured h3{font-size:24px}
+  .post{padding-top:24px}
+  .post h1{font-size:26px}
+  .post-body h2{font-size:22px;margin-top:52px}
+  .mg-kpis{grid-template-columns:1fr 1fr;gap:8px}
+  .mg-kpi{padding:16px}
+  .mg-kpi .k-value{font-size:22px}
+  .post-body table{font-size:14px}
+  .post-body td,.post-body th{padding:12px 8px}
+}
+
+  ]]></b:skin>
+</head>
+<body>
+
+<!-- ───────── 상단 바 : 카테고리 링크는 여기서 수정 ───────── -->
+<header class='top'>
+  <div class='wrap'>
+    <b:section class='brand' id='header' maxwidgets='1' showaddelement='no'>
+      <b:widget id='Header1' locked='true' title='블로그 제목' type='Header' version='2'>
+        <b:includable id='main'>
+          <a class='logo' expr:href='data:blog.homepageUrl'><i>₩</i><data:title/></a>
+        </b:includable>
+      </b:widget>
+    </b:section>
+    <nav class='nav'>
+      <a expr:href='data:blog.homepageUrl + &quot;search/label/재테크&quot;'>재테크</a>
+      <a expr:href='data:blog.homepageUrl + &quot;search/label/부업&quot;'>부업</a>
+      <a expr:href='data:blog.homepageUrl + &quot;search/label/절세&quot;'>절세</a>
+      <a expr:href='data:blog.homepageUrl + &quot;search/label/시황&quot;'>시황</a>
+    </nav>
+  </div>
+  <div class='progress' id='progress'/>
+</header>
+
+<main class='wrap'>
+  <b:section class='main' id='main' showaddelement='no'>
+    <b:widget id='Blog1' locked='true' title='블로그 글' type='Blog' version='2'>
+      <b:includable id='main' var='top'>
+
+        <b:if cond='data:view.isMultipleItems'>
+          <!-- ───────── 목록 화면 (메인·카테고리·검색) ───────── -->
+          <b:if cond='data:view.isHomepage'>
+            <section class='hero'>
+              <h1>어려운 돈 이야기,<br/><b>숫자 하나</b>로 정리합니다</h1>
+              <p>재테크·부업·절세를 그래프와 표로 3분 안에.</p>
+              <div class='chips'>
+                <a expr:href='data:blog.homepageUrl + &quot;search/label/연말정산&quot;'>🧾 연말정산</a>
+                <a expr:href='data:blog.homepageUrl + &quot;search/label/연금저축&quot;'>🏦 연금저축·IRP</a>
+                <a expr:href='data:blog.homepageUrl + &quot;search/label/부업&quot;'>💼 직장인 부업</a>
+                <a expr:href='data:blog.homepageUrl + &quot;search/label/앱테크&quot;'>📱 앱테크</a>
+              </div>
+            </section>
+            <div class='section-title'><h2>최신 글</h2></div>
+          <b:elseif cond='data:view.isLabelSearch'/>
+            <section class='hero'><h1><b><data:view.search.label/></b></h1><p>카테고리 글 모음</p></section>
+          <b:else/>
+            <section class='hero'><h1>검색 결과</h1></section>
+          </b:if>
+
+            <div class='grid'>
+              <b:loop index='i' values='data:posts' var='post'>
+                <a class='card' expr:href='data:post.url'>
+                  <b:class cond='data:view.isHomepage and data:i == 0' name='is-featured'/>
+                  <b:if cond='data:post.featuredImage'>
+                    <div class='thumb'><img expr:alt='data:post.title' expr:src='resizeImage(data:post.featuredImage, 800, &quot;1200:630&quot;)' loading='lazy'/></div>
+                  <b:else/>
+                    <div class='thumb empty'><data:blog.title/></div>
+                  </b:if>
+                  <div class='txt'>
+                    <b:if cond='data:post.labels'>
+                      <b:loop index='j' values='data:post.labels' var='label'>
+                        <b:if cond='data:j == 0'><div class='lab'><data:label.name/></div></b:if>
+                      </b:loop>
+                    </b:if>
+                    <h3><data:post.title/></h3>
+                    <p><data:post.snippets.short/></p>
+                    <time><data:post.date/></time>
+                  </div>
+                </a>
+              </b:loop>
+            </div>
+
+          <div class='pager'>
+            <b:if cond='data:newerPageUrl'><a expr:href='data:newerPageUrl'>← 최신 글</a></b:if>
+            <b:if cond='data:olderPageUrl'><a expr:href='data:olderPageUrl'>이전 글 →</a></b:if>
+          </div>
+
+        <b:else/>
+          <!-- ───────── 글 화면 ───────── -->
+          <b:if cond='data:blog.pageType == &quot;error_page&quot;'>
+            <section class='notfound'>
+              <div class='code'>404</div>
+              <h1>찾는 페이지가 없어요</h1>
+              <p>주소가 바뀌었거나 아직 발행되지 않은 글일 수 있어요.</p>
+              <a class='btn' expr:href='data:blog.homepageUrl'>홈으로 가기</a>
+            </section>
+          </b:if>
+          <b:loop values='data:posts' var='post'>
+            <article class='post'>
+              <b:if cond='data:post.labels'>
+                <b:loop index='j' values='data:post.labels' var='label'>
+                  <b:if cond='data:j == 0'><a class='crumb' expr:href='data:label.url'><data:label.name/></a></b:if>
+                </b:loop>
+              </b:if>
+              <h1><data:post.title/></h1>
+              <div class='meta'>
+                <span><data:blog.title/></span><span class='dot'/><time><data:post.date/></time>
+              </div>
+              <div class='post-body' id='post-body'><data:post.body/></div>
+              <b:if cond='data:post.labels'>
+                <div class='post-labels' id='post-labels'>
+                  <b:loop values='data:post.labels' var='label'>
+                    <a expr:href='data:label.url'>#<data:label.name/></a>
+                  </b:loop>
+                </div>
+              </b:if>
+            </article>
+            <b:if cond='data:view.isPost'>
+              <section class='related' id='related' style='display:none'>
+                <h2>같은 주제 다른 글</h2>
+                <div class='grid' id='related-grid'/>
+              </section>
+            </b:if>
+          </b:loop>
+        </b:if>
+
+      </b:includable>
+    </b:widget>
+  </b:section>
+
+  <!-- 레이아웃 메뉴에서 애드센스·인기글 등 가젯을 추가하는 자리 -->
+  <b:section class='extra' id='extra' showaddelement='yes'/>
+</main>
+
+<footer class='foot'>
+  <div class='wrap'>
+    <span>© <data:blog.title/> · 투자 판단의 책임은 본인에게 있습니다.</span>
+    <span><a expr:href='data:blog.homepageUrl + &quot;p/about.html&quot;'>소개</a><a expr:href='data:blog.homepageUrl + &quot;p/privacy.html&quot;'>개인정보처리방침</a><a expr:href='data:blog.homepageUrl + &quot;p/contact.html&quot;'>문의</a></span>
+  </div>
+</footer>
+
+<script>//<![CDATA[
+(function(){
+  var bar=document.getElementById('progress'), body=document.getElementById('post-body');
+  if(bar && body){
+    window.addEventListener('scroll',function(){
+      var r=body.getBoundingClientRect(), h=body.offsetHeight-window.innerHeight;
+      var p=Math.min(100,Math.max(0,(-r.top)/(h>0?h:1)*100));
+      bar.style.width=p+'%';
+    },{passive:true});
+  }
+  /* 넓은 표는 가로 스크롤 */
+  if(body){
+    var ts=body.getElementsByTagName('table');
+    for(var i=0;i<ts.length;i++){var t=ts[i];if(t.parentNode.className!=='table-scroll'){var w=document.createElement('div');w.className='table-scroll';t.parentNode.insertBefore(w,t);w.appendChild(t);}}
+  }
+  /* 같은 라벨 글 4개 */
+  var labs=document.getElementById('post-labels'), box=document.getElementById('related');
+  if(!labs || !box) return;
+  var first=labs.getElementsByTagName('a')[0]; if(!first) return;
+  var label=first.textContent.replace(/^#/,'');
+  var here=location.href.split('?')[0].split('#')[0];
+  var cb='mgRelated'+Date.now();
+  window[cb]=function(json){
+    var es=(json.feed&&json.feed.entry)||[], html='', n=0;
+    for(var i=0;i<es.length&&n<4;i++){
+      var e=es[i], url='';
+      for(var k=0;k<e.link.length;k++){if(e.link[k].rel==='alternate'){url=e.link[k].href;}}
+      if(!url||url===here) continue;
+      var img=e.media$thumbnail?e.media$thumbnail.url.replace(/\/s72(-c)?\//,'/w600-h315-p-k-no-nu/').replace(/=s72(-c)?$/,'=w600-h315-p-k-no-nu'):'';
+      html+='<a class="card" href="'+url+'">'+(img?'<div class="thumb"><img loading="lazy" src="'+img+'" alt=""></div>':'<div class="thumb empty"></div>')+'<h3>'+e.title.$t+'</h3></a>';
+      n++;
+    }
+    if(n){document.getElementById('related-grid').innerHTML=html;box.style.display='';}
+  };
+  var s=document.createElement('script');
+  s.src='/feeds/posts/summary/-/'+encodeURIComponent(label)+'?alt=json-in-script&max-results=6&callback='+cb;
+  document.body.appendChild(s);
+})();
+//]]></script>
+</body>
+</html>
