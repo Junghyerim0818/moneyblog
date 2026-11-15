@@ -1,0 +1,137 @@
+{
+  "post": "basics-per-pbr-roe",
+  "source": "예시 수치는 이해를 돕기 위한 가상 기업",
+  "graphics": [
+    {
+      "type": "thumbnail",
+      "file": "PER-PBR-ROE-썸네일",
+      "eyebrow": "금융 기초 02",
+      "title": "PER·PBR·ROE\n숫자 3개로 끝내기",
+      "highlight": "숫자 3개",
+      "number": {
+        "label": "PER 10이면",
+        "value": "10년 치 이익"
+      },
+      "alt": "PER PBR ROE 뜻과 보는 법 숫자 3개로 끝내기"
+    },
+    {
+      "type": "kpi",
+      "file": "PER-PBR-ROE-공식",
+      "eyebrow": "한눈에 보기",
+      "title": "세 지표, 이것만 기억하세요",
+      "sub": "주가가 같아도 이익·자산에 따라 숫자가 달라져요",
+      "items": [
+        {
+          "label": "PER = 주가 ÷ 주당순이익",
+          "value": "이익 대비",
+          "note": "낮을수록 이익에 비해 싸다"
+        },
+        {
+          "label": "PBR = 주가 ÷ 주당순자산",
+          "value": "자산 대비",
+          "note": "1보다 낮으면 장부가 아래"
+        },
+        {
+          "label": "ROE = 순이익 ÷ 자기자본",
+          "value": "돈 버는 힘",
+          "note": "높을수록 자본을 잘 굴림"
+        },
+        {
+          "label": "세 지표의 관계: PBR =",
+          "value": "PER × ROE",
+          "note": "ROE는 소수로 계산"
+        }
+      ],
+      "alt": "PER PBR ROE 공식과 의미 정리"
+    },
+    {
+      "type": "bars",
+      "file": "같은-주가-다른-PER",
+      "title": "주가는 똑같이 5만 원,\nPER은 제각각",
+      "sub": "가상 기업 A·B·C, 주당순이익(EPS)만 다를 때",
+      "items": [
+        {
+          "label": "A사 (EPS 1만 원)",
+          "value": 5,
+          "display": "PER 5배"
+        },
+        {
+          "label": "B사 (EPS 5천 원)",
+          "value": 10,
+          "display": "PER 10배"
+        },
+        {
+          "label": "C사 (EPS 2천 원)",
+          "value": 25,
+          "display": "PER 25배"
+        }
+      ],
+      "highlight": [
+        0
+      ],
+      "alt": "주가가 같아도 주당순이익에 따라 달라지는 PER 예시"
+    },
+    {
+      "type": "table",
+      "file": "PER-PBR-ROE-해석표",
+      "title": "숫자가 높으면? 낮으면?",
+      "sub": "같은 업종끼리 비교할 때 기준",
+      "header": [
+        "지표",
+        "낮으면",
+        "높으면"
+      ],
+      "rows": [
+        [
+          "PER",
+          "이익 대비 저평가",
+          "성장 기대 큼"
+        ],
+        [
+          "PBR",
+          "자산 대비 저평가",
+          "무형가치 반영"
+        ],
+        [
+          "ROE",
+          "자본 효율 낮음",
+          "돈 잘 버는 회사"
+        ]
+      ],
+      "alt": "PER PBR ROE 높을 때 낮을 때 해석 표"
+    },
+    {
+      "type": "checklist",
+      "file": "투자지표-확인-순서",
+      "title": "지표 볼 때 확인 순서",
+      "sub": "파란 칸을 건너뛰면 '싼 게 비지떡'에 걸리기 쉬워요",
+      "rows": [
+        [
+          "1",
+          "같은 업종 평균과 비교했나"
+        ],
+        [
+          "2",
+          "이익이 일회성은 아닌가"
+        ],
+        [
+          "3",
+          "적자 기업은 아닌가 (PER 없음)"
+        ],
+        [
+          "4",
+          "ROE가 몇 년째 꾸준한가"
+        ],
+        [
+          "5",
+          "부채가 너무 많진 않은가"
+        ]
+      ],
+      "highlight": [
+        0,
+        1
+      ],
+      "alt": "PER PBR ROE 투자지표 확인 순서 체크리스트"
+    }
+  ]
+}
