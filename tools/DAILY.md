@@ -76,3 +76,9 @@
 - 켜져 있으면 게시할 때 자동으로 글 끝(FAQ 위)에 책 1~2개 카드가 들어가고, 썸네일 아래에 대가성 문구가 붙어요.
 - 글 주제에 딱 맞는 키워드가 있으면 meta.json에 `"coupang": {"keyword": "환율 투자 책"}`처럼 지정해요. 시황 글은 `"coupang": false`로 둬요.
 - 금융상품·투자 서비스·코인 관련 상품은 넣지 않아요.
+
+## 조회수 보고 (매일 아침 결과 메시지에 함께)
+- '블로그 조회수' 워크플로(`.github/workflows/stats.yml`)가 매일 05:55 KST에 블로거 API 조회수를 받아 `tools/data/stats/pageviews.csv`(하루 한 줄)와 `latest.json`에 기록해요.
+- 아침 작업은 `git pull` 후 `latest.json`의 date가 오늘이 아니면 GitHub MCP `actions_run_trigger`로 `stats.yml`을 돌리고 끝난 뒤 다시 pull 해요.
+- 결과 메시지에 한 줄로 넣어요: "조회수: 지난 24시간 N회(day) · 최근 7일 N회(d7) · 30일 N회(d30) · 누적 N회(all)". day가 비어 있으면(첫 기록) 생략해요. 전날보다 크게 늘었으면(2배 이상) 한마디 덧붙여요.
+- 블로거 API는 글별 조회수를 주지 않아요. 글별 순위는 블로거 관리 화면 '통계'에서 봐야 해요.
