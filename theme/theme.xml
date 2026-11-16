@@ -49,6 +49,8 @@ img{max-width:100%;height:auto;display:block}
 .chips{display:flex;gap:8px;flex-wrap:wrap;margin:28px 0 8px}
 .chips a{padding:10px 16px;border-radius:999px;background:var(--card);font-weight:600;font-size:15px;color:var(--sub)}
 .chips a:hover{background:var(--blue-l);color:var(--blue)}
+.subtabs{margin:20px 0 0}
+.subtabs a.on{background:var(--blue);color:#fff}
 
 
 .section-title{display:flex;align-items:baseline;justify-content:space-between;margin:40px 0 16px}
@@ -306,12 +308,24 @@ img{max-width:100%;height:auto;display:block}
               <p>증권·경제·절세를 그래프와 표로 3분 안에.</p>
               <div class='chips'>
                 <a expr:href='data:blog.homepageUrl + &quot;search/label/금융기초&quot;'>📈 금융 기초</a>
+                <a expr:href='data:blog.homepageUrl + &quot;search/label/공모주&quot;'>🎟️ 공모주</a>
                 <a expr:href='data:blog.homepageUrl + &quot;search/label/경제용어&quot;'>📖 뉴스 속 경제 용어</a>
                 <a expr:href='data:blog.homepageUrl + &quot;search/label/절세&quot;'>🧾 절세</a>
               </div>
             </section>
           <b:elseif cond='data:view.isLabelSearch'/>
-            <section class='hero'><h1><b><data:view.search.label/></b></h1><p>카테고리 글 모음</p></section>
+            <section class='hero'><h1><b><data:view.search.label/></b></h1><p>카테고리 글 모음</p>
+              <!-- 증권 안의 하위 탭 (라벨 기준). 탭을 늘리려면 아래 목록과 in [...] 둘 다 수정 -->
+              <b:if cond='data:view.search.label in [&quot;증권&quot;,&quot;시황&quot;,&quot;공모주&quot;,&quot;속보&quot;,&quot;금융기초&quot;]'>
+                <nav class='chips subtabs' aria-label='증권 하위 메뉴'>
+                  <a expr:class='data:view.search.label == &quot;증권&quot; ? &quot;on&quot; : &quot;&quot;' expr:href='data:blog.homepageUrl + &quot;search/label/증권&quot;'>전체</a>
+                  <a expr:class='data:view.search.label == &quot;시황&quot; ? &quot;on&quot; : &quot;&quot;' expr:href='data:blog.homepageUrl + &quot;search/label/시황&quot;'>시황</a>
+                  <a expr:class='data:view.search.label == &quot;공모주&quot; ? &quot;on&quot; : &quot;&quot;' expr:href='data:blog.homepageUrl + &quot;search/label/공모주&quot;'>공모주</a>
+                  <a expr:class='data:view.search.label == &quot;속보&quot; ? &quot;on&quot; : &quot;&quot;' expr:href='data:blog.homepageUrl + &quot;search/label/속보&quot;'>속보</a>
+                  <a expr:class='data:view.search.label == &quot;금융기초&quot; ? &quot;on&quot; : &quot;&quot;' expr:href='data:blog.homepageUrl + &quot;search/label/금융기초&quot;'>금융 기초</a>
+                </nav>
+              </b:if>
+            </section>
           <b:else/>
             <section class='hero'><h1>검색 결과</h1></section>
           </b:if>
@@ -461,7 +475,7 @@ img{max-width:100%;height:auto;display:block}
   /* \uc8fc\uc81c\ubcc4 \uc2ac\ub77c\uc774\ub4dc */
   var rows=document.getElementById('topic-rows');
   if(rows){
-    [['\uc99d\uad8c','\uae08\uc735 \uae30\ucd08 \u00b7 \uc8fc\uc2dd \u00b7 ETF'],['\uacbd\uc81c','\ub274\uc2a4 \uc18d \uacbd\uc81c \uc6a9\uc5b4 \u00b7 \uae08\ub9ac \u00b7 \ud658\uc728'],['\uc808\uc138','\uc5f0\ub9d0\uc815\uc0b0 \u00b7 \uc5f0\uae08\uc800\ucd95 \u00b7 \uc8fc\uc2dd \uc138\uae08']].forEach(function(t){
+    [['\uc99d\uad8c','\uc2dc\ud669 \u00b7 \uacf5\ubaa8\uc8fc \u00b7 \uae08\uc735 \uae30\ucd08'],['\uacbd\uc81c','\ub274\uc2a4 \uc18d \uacbd\uc81c \uc6a9\uc5b4 \u00b7 \uae08\ub9ac \u00b7 \ud658\uc728'],['\uc808\uc138','\uc5f0\ub9d0\uc815\uc0b0 \u00b7 \uc5f0\uae08\uc800\ucd95 \u00b7 \uc8fc\uc2dd \uc138\uae08']].forEach(function(t){
       var row=document.createElement('section');row.className='topic-row';row.style.display='none';
       row.innerHTML='<div class="section-title"><h2>'+t[0]+'<small>'+t[1]+'</small></h2><span class="row-ctl"><button type="button" aria-label="\uc774\uc804">\u2039</button><button type="button" aria-label="\ub2e4\uc74c">\u203a</button><a href="/search/label/'+encodeURIComponent(t[0])+'">\uc804\uccb4 \ubcf4\uae30</a></span></div><div class="slider"></div>';
       rows.appendChild(row);

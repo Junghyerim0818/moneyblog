@@ -35,6 +35,8 @@ img{max-width:100%;height:auto;display:block}
 .chips{display:flex;gap:8px;flex-wrap:wrap;margin:28px 0 8px}
 .chips a{padding:10px 16px;border-radius:999px;background:var(--card);font-weight:600;font-size:15px;color:var(--sub)}
 .chips a:hover{background:var(--blue-l);color:var(--blue)}
+.subtabs{margin:20px 0 0}
+.subtabs a.on{background:var(--blue);color:#fff}
 
 /* 글 목록 카드 */
 .section-title{display:flex;align-items:baseline;justify-content:space-between;margin:40px 0 16px}
