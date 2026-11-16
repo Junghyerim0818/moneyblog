@@ -1,0 +1,37 @@
+name: 블로그 조회수
+
+on:
+  schedule:
+    - cron: "55 20 * * *"   # 매일 05:55 KST (아침 글 작업 전)
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: stats
+  cancel-in-progress: false
+
+jobs:
+  stats:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: 조회수 받기
+        env:
+          BLOGGER_CLIENT_ID: ${{ secrets.BLOGGER_CLIENT_ID }}
+          BLOGGER_CLIENT_SECRET: ${{ secrets.BLOGGER_CLIENT_SECRET }}
+          BLOGGER_REFRESH_TOKEN: ${{ secrets.BLOGGER_REFRESH_TOKEN }}
+          BLOGGER_BLOG_ID: ${{ secrets.BLOGGER_BLOG_ID }}
+        run: python blogger/stats.py
+      - name: 저장
+        run: |
+          git config user.name "stats-bot"
+          git config user.email "stats-bot@users.noreply.github.com"
+          git add tools/data/stats
+          git diff --cached --quiet && exit 0
+          git commit -m "조회수 기록 [skip ci]"
+          for i in 1 2 3; do git pull --rebase && git push && break; sleep 5; done
