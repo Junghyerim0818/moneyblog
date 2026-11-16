@@ -42,7 +42,14 @@ def main():
         except Exception as e:  # 하나 실패해도 나머지는 저장
             print(f"! {name} ({sym}) 실패: {e}")
             continue
-        with open(OUT / f"{name}.csv", "w", newline="", encoding="utf-8") as f:
+        # 야후가 가끔 최근 하루치를 빠뜨려요(예: 2026-11-16 코스피). 기존 기록은 지우지 않고 합쳐요.
+        path = OUT / f"{name}.csv"
+        if path.exists():
+            with open(path, encoding="utf-8") as f:
+                old = {r["date"]: float(r["close"]) for r in csv.DictReader(f)}
+            old.update(dict(rows))
+            rows = sorted(old.items())[-400:]
+        with open(path, "w", newline="", encoding="utf-8") as f:
             w = csv.writer(f)
             w.writerow(["date", "close"])
             w.writerows(rows)
