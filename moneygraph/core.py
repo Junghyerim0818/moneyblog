@@ -301,7 +301,7 @@ def trend(s, out):
         a.scatter([xs[-1]], [se["values"][-1]], s=140, color=col, zorder=4, edgecolors="white", linewidths=3)
         lab = f"{fmt(se['values'][-1], unit)}"
         a.annotate(lab + (f"  {se['name']}" if len(s["series"]) > 1 else ""), (xs[-1], se["values"][-1]),
-                   xytext=(14, 0), textcoords="offset points", va="center", fontproperties=font("b"),
+                   xytext=(14, se.get("label_dy", 0)), textcoords="offset points", va="center", fontproperties=font("b"),
                    fontsize=24 * 0.72, color=col, annotation_clip=False)
     a.grid(axis="y", color=C["line"], lw=1.5)
     a.set_axisbelow(True)
