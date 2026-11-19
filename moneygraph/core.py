@@ -291,6 +291,7 @@ def trend(s, out):
     allv = [v for se in s["series"] for v in se["values"] if v is not None]
     lo, hi = min(allv), max(allv)
     padv = (hi - lo) * 0.15 or 1
+    small = (hi - lo) < 20  # 금리·지수처럼 범위가 좁으면 소수점 표시
     a.set_ylim(s.get("ymin", lo - padv), hi + padv)
     for k, se in enumerate(s["series"]):
         col = se.get("color") or PALETTE[k]
@@ -299,7 +300,7 @@ def trend(s, out):
         if s.get("area", len(s["series"]) == 1):
             a.fill_between(xs, se["values"], a.get_ylim()[0], color=col, alpha=0.08, zorder=2)
         a.scatter([xs[-1]], [se["values"][-1]], s=140, color=col, zorder=4, edgecolors="white", linewidths=3)
-        lab = f"{fmt(se['values'][-1], unit)}"
+        lab = f"{se['values'][-1]:,.2f}{unit}" if small else f"{fmt(se['values'][-1], unit)}"
         a.annotate(lab + (f"  {se['name']}" if len(s["series"]) > 1 else ""), (xs[-1], se["values"][-1]),
                    xytext=(14, se.get("label_dy", 0)), textcoords="offset points", va="center", fontproperties=font("b"),
                    fontsize=24 * 0.72, color=col, annotation_clip=False)
@@ -311,7 +312,8 @@ def trend(s, out):
     for t in a.get_yticklabels():
         t.set_fontproperties(font("m"))
         t.set_fontsize(18 * 0.72)
-    a.yaxis.set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: f"{v:,.0f}"))
+    a.yaxis.set_major_formatter(matplotlib.ticker.FuncFormatter(
+        (lambda v, _: f"{v:,.2f}") if small else (lambda v, _: f"{v:,.0f}")))
     cv.footer(s.get("source"))
     return cv.save(out)
 
