@@ -307,7 +307,12 @@ def trend(s, out):
     a.grid(axis="y", color=C["line"], lw=1.5)
     a.set_axisbelow(True)
     step = max(1, len(xs) // 6)
-    a.set_xticks(xs[::step] + ([xs[-1]] if xs[-1] % step else []))
+    ticks = xs[::step]
+    if xs[-1] % step:
+        if xs[-1] - ticks[-1] < step * 0.6:  # 마지막 눈금과 너무 가까우면 겹치니 바꿔 끼움
+            ticks = ticks[:-1]
+        ticks = ticks + [xs[-1]]
+    a.set_xticks(ticks)
     a.set_xticklabels([s["x"][i] for i in a.get_xticks()], fontproperties=font("m"), fontsize=18 * 0.72)
     for t in a.get_yticklabels():
         t.set_fontproperties(font("m"))
