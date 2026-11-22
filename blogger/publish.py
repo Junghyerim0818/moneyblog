@@ -129,7 +129,16 @@ def main():
             mode = json.loads((f / "meta.json").read_text(encoding="utf-8")).get("mode", "draft")
             if rec.get("mode") == "draft" and mode in ("publish", "schedule"):
                 promote.append((f, rec, mode))
-    if not todo and not promote:
+    # 이미 올린 글 본문 고치기: meta.json 의 "revision" 숫자를 posted.json 의 값보다 크게 올리면 본문·제목·라벨을 다시 보냄
+    revise = []
+    for f in folders:
+        pj = f / "posted.json"
+        if pj.exists():
+            rec = json.loads(pj.read_text(encoding="utf-8"))
+            rev = json.loads((f / "meta.json").read_text(encoding="utf-8")).get("revision", 0)
+            if rev > rec.get("revision", 0):
+                revise.append((f, rec, rev))
+    if not todo and not promote and not revise:
         print("새 글 없음")
         return
     token = None if a.dry_run else access_token()
@@ -156,6 +165,24 @@ def main():
         print(f"  → 완료 {res.get('url', '')}")
         rec.update({"mode": mode, "url": res.get("url", rec.get("url")),
                     "at": datetime.now(KST).isoformat(timespec="minutes")})
+        (f / "posted.json").write_text(json.dumps(rec, ensure_ascii=False, indent=1), encoding="utf-8")
+
+    for n, (f, rec, rev) in enumerate(revise):
+        meta = json.loads((f / "meta.json").read_text(encoding="utf-8"))
+        print(f"- {f.name}: 본문 수정 (revision {rev})")
+        if a.dry_run:
+            continue
+        if n:
+            time.sleep(10)
+        body = coupang.apply(build_body(f), meta)
+        try:
+            res = call("PATCH", f"{API}/blogs/{blog_id}/posts/{rec['id']}",
+                       {"title": meta["title"], "content": body, "labels": meta.get("labels", [])[:20]}, token)
+        except RateLimited:
+            print("요청 한도가 풀리지 않아 멈춤. 나머지는 다음 실행 때 이어서 합니다.")
+            return
+        print(f"  → 수정 완료 {res.get('url', '')}")
+        rec.update({"revision": rev, "revised_at": datetime.now(KST).isoformat(timespec="minutes")})
         (f / "posted.json").write_text(json.dumps(rec, ensure_ascii=False, indent=1), encoding="utf-8")
 
     for n, f in enumerate(todo):

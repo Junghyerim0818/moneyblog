@@ -11,7 +11,7 @@ MARKET_22 = B + "market-2026-11-22.html"
 IPO_BASICS = B + "ipo-subscription-basics.html"
 IPO_WEEK = B + f"ipo-week-{D}.html"
 MARKET_POST = B + f"market-{D}.html"
-SAF_POST = B + "econ-term-stock-market-stabilization-fund.html"
+SAF_POST = B + "econ-term-stock-market-stabilization.html"  # 블로거가 주소를 줄여서 공개함
 DEPOSIT_POST = B + "econ-term-investor-deposits.html"
 NOTE_IPO = ('<p class="mg-note">※ 2026년 11월 23일 기준으로 정리한 글입니다. 공모 일정과 공모가는 증권신고서 정정으로 바뀔 수 있으니 '
             '청약 전 주관 증권사 공지와 DART 증권신고서를 꼭 확인하세요. 특정 종목의 청약·매수·매도 권유가 아닙니다.</p>')
@@ -23,7 +23,7 @@ make(
     f"{D}-market",
     {"title": "이번 주 증시 일정(11/23~27)｜금통위·美 PCE 한 주, 주말엔 '증안펀드 준비' 발표",
      "labels": ["증권", "시황", "주간일정", "금통위", "PCE"], "mode": "publish", "slug": f"market-{D}",
-     "coupang": False},
+     "coupang": False, "revision": 1},
     {"source": "한국거래소·한국은행·뉴스 보도 종합 (11월 23일 기준)", "graphics": [
         {"type": "thumbnail", "file": "시황-1123-썸네일",
          "eyebrow": "이번 주 증시 일정", "title": "금통위·PCE\n숫자 많은 한 주",

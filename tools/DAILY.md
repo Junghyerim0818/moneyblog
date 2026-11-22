@@ -9,6 +9,8 @@
 | 절세 | 이슈 있을 때만 | `posts/YYYY-MM-DD-tax-영문주제` | `["절세", ...]` | `tax-2027-year-end-change` |
 
 - `meta.json`: `{"title", "labels", "mode": "publish", "slug"}`. slug는 영어 소문자·하이픈만 사용해요. 블로그 주소가 돼요.
+  - 블로거는 긴 slug를 잘라요(예: `econ-term-stock-market-stabilization-fund` → `econ-term-stock-market-stabilization.html`). slug는 짧게(대략 40자 이하) 쓰고, 같은 날 다른 글에서 링크할 땐 게시 후 posted.json의 실제 주소를 확인해요.
+  - 이미 올린 글을 고칠 땐 meta에 `"revision": 1`(다음엔 2, 3…)을 넣고 push하면 게시 봇이 본문·제목·라벨을 다시 보내요.
 - 글은 `tools/daily/YYYY-MM-DD.py`에서 `postkit.make()`로 만들어요. `tools/build_*.py` 형식을 그대로 따라요.
 
 ## 증권 시황 (전날 기준)
